@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:eydata_flutter/show_toast.dart';
 import 'package:flutter/material.dart';
@@ -64,12 +66,21 @@ class _MyHomePageState extends State<MyHomePage> {
       'Ver': "1.0",
       'Mac': "test",
     };
+    dio.options.headers = {
+      /// 解决访问接口无内容
+      HttpHeaders.contentTypeHeader:
+          "application/x-www-form-urlencoded;charset=utf-8"
+    };
     Response response = await dio.post(
-      'http://w.eydata.net/b7ebe1de688d01b5',
+      'https://w.eydata.net/114450B47AE395A4',
       data: data,
       queryParameters: data,
     );
     print('submit.data::${response.data}');
+    print('submit.statusCode::${response.statusCode}');
+    print('submit.requestOptions.path::${response.requestOptions.path}');
+    print('submit.realUri::${response.realUri.data}');
+    print('submit.headers::${response.headers}');
     if (response.data.length == 'B8882CE538791020935E9D546B28BBAC'.length) {
       getTime();
     }
@@ -84,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
       'UserName': textEditingController.text,
     };
     Response response = await dio.post(
-      'http://w.eydata.net/1822cb4ace59dc9b',
+      'http://w.eydata.net/7F2515ADCF978C59',
       data: data,
       queryParameters: data,
     );
